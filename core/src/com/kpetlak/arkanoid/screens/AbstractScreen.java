@@ -3,23 +3,38 @@ package com.kpetlak.arkanoid.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.kpetlak.arkanoid.assets.ScreenAssets;
 import com.kpetlak.arkanoid.game.ArkanoidGame;
 
 
 public abstract class AbstractScreen implements Screen {
+    protected ScreenAssets assets;
     protected SpriteBatch batch;
     protected ArkanoidGame game;
     protected Stage stage;
+    private OrthographicCamera camera;
 
-    public AbstractScreen(ArkanoidGame game) {
+    public AbstractScreen(ArkanoidGame game, ScreenAssets assets) {
         this.game = game;
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, ArkanoidGame.WIDTH, ArkanoidGame.HEIGHT);
+        camera.update();
         stage = new Stage(new StretchViewport(ArkanoidGame.WIDTH, ArkanoidGame.HEIGHT));
         batch = new SpriteBatch();
         Gdx.input.setInputProcessor(stage);
+        this.assets = assets;
+        this.assets.load();
+        this.assets.manager.finishLoading();
+        if(this.assets.manager.update()) {
+            init();
+        }
     }
+
+    protected abstract void init();
 
     @Override
     public void show() {
@@ -29,6 +44,8 @@ public abstract class AbstractScreen implements Screen {
     @Override
     public void render(float delta) {
         clearScreen();
+        camera.update();
+        batch.setProjectionMatrix(camera.combined);
     }
 
     private void clearScreen() {

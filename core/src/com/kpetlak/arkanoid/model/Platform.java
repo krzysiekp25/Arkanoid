@@ -1,19 +1,14 @@
 package com.kpetlak.arkanoid.model;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.kpetlak.arkanoid.assets.ScreenAssets;
 
-public class Platform extends Rectangle {
-    private Texture texture;
+public class Platform extends Image {
     private int speed = 500;
 
     public Platform(ScreenAssets assets) {
-        this.texture = assets.manager.get("platform/platform.png", Texture.class);
-    }
-
-    public Texture getTexture() {
-        return texture;
+        super(assets.manager.get("platform/platform.png", Texture.class));
     }
 
     public int getSpeed() {

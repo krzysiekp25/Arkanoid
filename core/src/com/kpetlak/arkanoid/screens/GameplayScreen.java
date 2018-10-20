@@ -1,6 +1,8 @@
 package com.kpetlak.arkanoid.screens;
 
-import com.kpetlak.arkanoid.assets.ScreenAssets;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Texture;
 import com.kpetlak.arkanoid.game.ArkanoidGame;
 import com.kpetlak.arkanoid.assets.GameplayScreenAssets;
 import com.kpetlak.arkanoid.model.Ball;
@@ -11,52 +13,70 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameplayScreen extends AbstractScreen {
-    private ScreenAssets assets;
     private Ball ball;
     private Platform platform;
     private List<List<Brick>> bricks;
 
 
     public GameplayScreen(ArkanoidGame game) {
-        super(game);
-        assets = new GameplayScreenAssets();
-        assets.load();
-        assets.manager.finishLoading();
-        if(assets.manager.update()) {
-            init();
-        }
+        super(game, new GameplayScreenAssets());
     }
 
-    private void init() {
-        ball = new Ball(assets);
-        ball.setX(50);
-        ball.setY(50);
+    protected void init() {
+        initBall();
+        initPlatform();
+        initBricks();
+    }
 
-        platform = new Platform(assets);
-
+    private void initBricks() {
         bricks = new ArrayList<List<Brick>>();
         for (int i = 0; i< 5; i++) {
             bricks.add(new ArrayList<Brick>());
             for (int j = 0; j<4; j++) {
                 bricks.get(i).add(new Brick(assets));
-                bricks.get(i).get(j).setX(i*1.1f*bricks.get(i).get(j).getTexture().getWidth()+200);
-                bricks.get(i).get(j).setY(j*1.1f*bricks.get(i).get(j).getTexture().getHeight()+300);
+                bricks.get(i).get(j).setX(i*1.1f*assets.manager.get("bricks/brick.png", Texture.class).getWidth()+200);
+                bricks.get(i).get(j).setY(j*1.1f*assets.manager.get("bricks/brick.png", Texture.class).getHeight()+300);
+                stage.addActor(bricks.get(i).get(j));
             }
         }
     }
 
+    private void initPlatform() {
+        platform = new Platform(assets);
+        stage.addActor(platform);
+    }
+
+    private void initBall() {
+        ball = new Ball(assets);
+        ball.setX(50);
+        ball.setY(50);
+        stage.addActor(ball);
+    }
+
+
     @Override
     public void render(float delta) {
         super.render(delta);
+        update();
         batch.begin();
-        batch.draw(ball.getTexture(), ball.x, ball.y);
-        batch.draw(platform.getTexture(), platform.x, platform.y);
-        for (List<Brick> list: bricks) {
-            for (Brick brick : list) {
-                batch.draw(brick.getTexture(), brick.x, brick.y);
-            }
-
-        }
+        stage.draw();
         batch.end();
+    }
+
+    private void update() {
+        if(Gdx.input.isKeyPressed(Input.Keys.A)) {
+            ball.setX(ball.getX()-ball.getSpeed()*Gdx.graphics.getDeltaTime());
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.D)) {
+            ball.setX(ball.getX()+ball.getSpeed()*Gdx.graphics.getDeltaTime());
+        }
+
+        if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            platform.setX(platform.getX()-platform.getSpeed()*Gdx.graphics.getDeltaTime());
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            platform.setX(platform.getX()+platform.getSpeed()*Gdx.graphics.getDeltaTime());
+        }
+        stage.act();
     }
 }

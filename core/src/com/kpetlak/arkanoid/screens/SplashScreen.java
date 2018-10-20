@@ -2,6 +2,7 @@ package com.kpetlak.arkanoid.screens;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Timer;
+import com.kpetlak.arkanoid.assets.GameplayScreenAssets;
 import com.kpetlak.arkanoid.game.ArkanoidGame;
 
 public class SplashScreen extends AbstractScreen {
@@ -9,8 +10,7 @@ public class SplashScreen extends AbstractScreen {
     private Texture splashTexture;
 
     public SplashScreen(final ArkanoidGame game) {
-        super(game);
-        init();
+        super(game, new GameplayScreenAssets());//todo stworzyc assety do splashscreen
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
@@ -19,7 +19,7 @@ public class SplashScreen extends AbstractScreen {
         }, 1);
     }
 
-    private void init() {
+    protected void init() {
         splashTexture = new Texture("splash/doge.jpg");
     }
 

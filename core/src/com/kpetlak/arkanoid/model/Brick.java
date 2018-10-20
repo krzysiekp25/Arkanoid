@@ -1,17 +1,12 @@
 package com.kpetlak.arkanoid.model;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.kpetlak.arkanoid.assets.ScreenAssets;
 
-public class Brick extends Rectangle {
-    private Texture texture;
+public class Brick extends Image {
 
     public Brick(ScreenAssets assets) {
-        this.texture = assets.manager.get("bricks/brick.png", Texture.class);
-    }
-
-    public Texture getTexture() {
-        return texture;
+        super(assets.manager.get("bricks/brick.png", Texture.class));
     }
 }
