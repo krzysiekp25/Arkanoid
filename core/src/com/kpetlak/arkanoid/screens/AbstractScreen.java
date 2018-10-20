@@ -20,18 +20,27 @@ public abstract class AbstractScreen implements Screen {
 
     public AbstractScreen(ArkanoidGame game, ScreenAssets assets) {
         this.game = game;
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, ArkanoidGame.WIDTH, ArkanoidGame.HEIGHT);
-        camera.update();
+        createCamera();
         stage = new Stage(new StretchViewport(ArkanoidGame.WIDTH, ArkanoidGame.HEIGHT));
         batch = new SpriteBatch();
         Gdx.input.setInputProcessor(stage);
-        this.assets = assets;
-        this.assets.load();
-        this.assets.manager.finishLoading();
+
+        loadAssets(assets);
         if(this.assets.manager.update()) {
             init();
         }
+    }
+
+    private void loadAssets(ScreenAssets assets) {
+        this.assets = assets;
+        this.assets.load();
+        this.assets.manager.finishLoading();
+    }
+
+    private void createCamera() {
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, ArkanoidGame.WIDTH, ArkanoidGame.HEIGHT);
+        camera.update();
     }
 
     protected abstract void init();

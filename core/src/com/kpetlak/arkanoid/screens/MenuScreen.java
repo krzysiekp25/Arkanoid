@@ -1,34 +1,43 @@
 package com.kpetlak.arkanoid.screens;
 
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Timer;
 import com.kpetlak.arkanoid.assets.GameplayScreenAssets;
 import com.kpetlak.arkanoid.game.ArkanoidGame;
+import com.kpetlak.arkanoid.model.MenuButton;
 
 public class MenuScreen extends AbstractScreen {
-    private BitmapFont font;
+    private MenuButton menuButton;
 
     public MenuScreen(final ArkanoidGame game) {
         super(game, new GameplayScreenAssets());//todo nowe assety do menu
         init();
-        Timer.schedule(new Timer.Task() {
-            @Override
-            public void run() {
-                game.setScreen(new GameplayScreen(game));
-            }
-        }, 1);
     }
 
     protected void init() {
-        font = new BitmapFont();
+        TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
+        menuButton = new MenuButton();
+        stage.addActor(menuButton.getLabelToolTip());
+        /*exitButton = new TextButton("ZAMKNIJ", new TextButton.TextButtonStyle());
+        stage.addActor(exitButton);*/
     }
 
     @Override
     public void render(float delta) {
         super.render(delta);
+        update();
         batch.begin();
-        font.draw(batch, "Menu", ArkanoidGame.WIDTH/2, ArkanoidGame.HEIGHT/2);
+        stage.draw();
         batch.end();
+    }
+
+    private void update() {
+        stage.act();
+        if(menuButton.getLabelToolTip().isPressed()) {
+            game.setScreen(new GameplayScreen(game));
+        }
     }
 }
