@@ -1,12 +1,9 @@
-package com.kpetlak.arkanoid.manager;
+package com.kpetlak.arkanoid.assets;
 
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Disposable;
 
-public class Assets implements Disposable {
-
-    public final AssetManager manager = new AssetManager();
+public class GameplayScreenAssets implements Disposable, ScreenAssets {
 
     public void load() {
         //todo tekstury to narazie placeholdery i należy stworzyć własne ładne tekstury na koniec
