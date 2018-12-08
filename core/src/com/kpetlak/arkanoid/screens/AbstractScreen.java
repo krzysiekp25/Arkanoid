@@ -82,6 +82,8 @@ public abstract class AbstractScreen implements Screen {
     public void dispose() {
         game.dispose();
         assets.dispose();
+        batch.dispose();
+        stage.dispose();
     }
 
     @Override

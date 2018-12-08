@@ -67,8 +67,9 @@ public class GamePlayScreen extends AbstractScreen {
 
     private void initBall() {
         ball = new Ball(assets);
-        ball.setX(MathUtils.random(platform.getX(), platform.getX()+platform.getWidth()));
+        ball.setX(MathUtils.random(platform.getX(), (platform.getX()+platform.getWidth())-ball.getWidth()));
         ball.setY(platform.getHeight());
+        ballController.setStartingVector(ball, platform);
         stage.addActor(ball);
     }
 
