@@ -17,6 +17,7 @@ public abstract class AbstractScreen implements Screen {
     protected ArkanoidGame game;
     protected Stage stage;
     private OrthographicCamera camera;
+    private boolean exit;
 
     public AbstractScreen(ArkanoidGame game, ScreenAssets assets) {
         this.game = game;
@@ -24,12 +25,13 @@ public abstract class AbstractScreen implements Screen {
         stage = new Stage(new StretchViewport(ArkanoidGame.WIDTH, ArkanoidGame.HEIGHT));
         batch = new SpriteBatch();
         Gdx.input.setInputProcessor(stage);
-
+        exit = false;
         loadAssets(assets);
         if(this.assets.manager.update()) {
             init();
         }
     }
+
 
     private void loadAssets(ScreenAssets assets) {
         this.assets = assets;
@@ -55,10 +57,14 @@ public abstract class AbstractScreen implements Screen {
         clearScreen();
         camera.update();
         batch.setProjectionMatrix(camera.combined);
+        if(isExit()) {
+            dispose();
+            Gdx.app.exit();
+        }
     }
 
     private void clearScreen() {
-        Gdx.gl.glClearColor(0, 1, 0, 0);
+        Gdx.gl.glClearColor(95/255f, 158/255f, 160/255f, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
 
@@ -75,6 +81,7 @@ public abstract class AbstractScreen implements Screen {
     @Override
     public void dispose() {
         game.dispose();
+        assets.dispose();
     }
 
     @Override
@@ -85,5 +92,13 @@ public abstract class AbstractScreen implements Screen {
     @Override
     public void resize(int width, int height) {
 
+    }
+
+    public boolean isExit() {
+        return exit;
+    }
+
+    public void setExit(boolean exit) {
+        this.exit = exit;
     }
 }

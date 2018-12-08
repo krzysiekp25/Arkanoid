@@ -3,13 +3,13 @@ package com.kpetlak.arkanoid.screens;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.kpetlak.arkanoid.assets.GameplayScreenAssets;
 import com.kpetlak.arkanoid.assets.MenuScreenAssets;
 import com.kpetlak.arkanoid.game.ArkanoidGame;
-import com.kpetlak.arkanoid.model.MenuButton;
+import com.kpetlak.arkanoid.model.GameButton;
 
 public class MenuScreen extends AbstractScreen {
-    private MenuButton menuButton;
+    private GameButton startButton;
+    private GameButton exitButton;
 
     public MenuScreen(final ArkanoidGame game) {
         super(game, new MenuScreenAssets());//todo nowe assety do menu
@@ -18,20 +18,26 @@ public class MenuScreen extends AbstractScreen {
 
     protected void init() {
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
-        menuButton = new MenuButton("start", assets);
-        stage.addActor(menuButton.getButton());
-        menuButton.getButton().addListener(new ClickListener(){
+        startButton = new GameButton("START", assets, 210, 250);
+        startButton.getButton().addListener(new ClickListener(){
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                game.setScreen(new GameplayScreen(game));
-                return super.touchDown(event, x, y, pointer, button);
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                super.touchUp(event, x, y, pointer, button);
+                game.setScreen(new GamePlayScreen(game));
             }
         });
-        /*exitButton = new TextButton("ZAMKNIJ", new TextButton.TextButtonStyle());
-        stage.addActor(exitButton);*/
+        exitButton = new GameButton("ZAMKNIJ", assets, 210, 140);
+        exitButton.getButton().addListener(new ClickListener() {
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                super.touchUp(event, x, y, pointer, button);
+                setExit(true);
+            }
+        });
+        stage.addActor(exitButton.getButton());
+        stage.addActor(startButton.getButton());
     }
 
-    //todo abstrakcyjna metoda render
     @Override
     public void render(float delta) {
         super.render(delta);

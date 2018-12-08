@@ -10,6 +10,9 @@ public class GameplayScreenAssets implements Disposable, ScreenAssets {
         manager.load("ball/ball.png", Texture.class);
         manager.load("platform/platform.png", Texture.class);
         manager.load("bricks/brick.png", Texture.class);
+        manager.load("button/normal_button2.png", Texture.class);
+        manager.load("button/hover_button2.png", Texture.class);
+        manager.load("button/pressed_button2.png", Texture.class);
     }
     @Override
     public void dispose() {
