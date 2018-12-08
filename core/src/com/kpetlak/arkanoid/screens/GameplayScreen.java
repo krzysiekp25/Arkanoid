@@ -1,8 +1,9 @@
 package com.kpetlak.arkanoid.screens;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.kpetlak.arkanoid.controller.BallController;
+import com.kpetlak.arkanoid.controller.BrickController;
+import com.kpetlak.arkanoid.controller.PlatformController;
 import com.kpetlak.arkanoid.game.ArkanoidGame;
 import com.kpetlak.arkanoid.assets.GameplayScreenAssets;
 import com.kpetlak.arkanoid.model.Ball;
@@ -16,6 +17,9 @@ public class GameplayScreen extends AbstractScreen {
     private Ball ball;
     private Platform platform;
     private List<List<Brick>> bricks;
+    private BallController ballController;
+    private PlatformController platformController;
+    private BrickController brickController;
 
 
     public GameplayScreen(ArkanoidGame game) {
@@ -23,6 +27,9 @@ public class GameplayScreen extends AbstractScreen {
     }
 
     protected void init() {
+        ballController = new BallController();
+        platformController = new PlatformController();
+        brickController = new BrickController();
         initBall();
         initPlatform();
         initBricks();
@@ -63,20 +70,22 @@ public class GameplayScreen extends AbstractScreen {
         batch.end();
     }
 
-    private void update() {
-        if(Gdx.input.isKeyPressed(Input.Keys.A)) {
-            ball.setX(ball.getX()-ball.getSpeed()*Gdx.graphics.getDeltaTime());
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.D)) {
-            ball.setX(ball.getX()+ball.getSpeed()*Gdx.graphics.getDeltaTime());
-        }
+    public void win() {
+        //todo wyświetlić napis i przycisk na planszy poinformowac o wygranej
+    }
 
-        if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            platform.setX(platform.getX()-platform.getSpeed()*Gdx.graphics.getDeltaTime());
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            platform.setX(platform.getX()+platform.getSpeed()*Gdx.graphics.getDeltaTime());
-        }
+    public void lose() {
+        //todo wyswietlic napis i przycisk o wygranej
+        game.setScreen(new MenuScreen(game));
+    }
+
+    private void update() {
+
+        ballController.updatePosition(ball);
+        platformController.updatePosition(platform);
+        ballController.checkCollisionAndUpdate(ball, platform, this);
+        platformController.checkCollisionAndUpdate(platform);
+
         stage.act();
     }
 }

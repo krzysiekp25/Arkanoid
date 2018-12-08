@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.kpetlak.arkanoid.assets.GameplayScreenAssets;
+import com.kpetlak.arkanoid.assets.MenuScreenAssets;
 import com.kpetlak.arkanoid.game.ArkanoidGame;
 import com.kpetlak.arkanoid.model.MenuButton;
 
@@ -11,15 +12,15 @@ public class MenuScreen extends AbstractScreen {
     private MenuButton menuButton;
 
     public MenuScreen(final ArkanoidGame game) {
-        super(game, new GameplayScreenAssets());//todo nowe assety do menu
+        super(game, new MenuScreenAssets());//todo nowe assety do menu
         init();
     }
 
     protected void init() {
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
-        menuButton = new MenuButton();
-        stage.addActor(menuButton.getLabelToolTip());
-        menuButton.getLabelToolTip().addListener(new ClickListener(){
+        menuButton = new MenuButton("start", assets);
+        stage.addActor(menuButton.getButton());
+        menuButton.getButton().addListener(new ClickListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 game.setScreen(new GameplayScreen(game));
