@@ -9,23 +9,17 @@ import com.kpetlak.arkanoid.assets.ScreenAssets;
 public class GameButton {
 
     private TextButton button;
-    private TextButton.TextButtonStyle textButtonStyle;
-    private Skin skin;
-
 
     public GameButton(String text, ScreenAssets assets, float x, float y, BitmapFont font) {
-        skin = new Skin();
+        Skin skin = new Skin();
         skin.add("normal", assets.manager.get("button/normal_button2.png", Texture.class));
         skin.add("hover", assets.manager.get("button/hover_button2.png", Texture.class));
         skin.add("pressed", assets.manager.get("button/pressed_button2.png", Texture.class));
-        textButtonStyle = new TextButton.TextButtonStyle();
+        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.up = skin.getDrawable("normal");
         textButtonStyle.over = skin.getDrawable("hover");
         textButtonStyle.down = skin.getDrawable("pressed");
-        //BitmapFont bitmapFont = new BitmapFont();
         textButtonStyle.font = font;
-        //textButtonStyle.font = bitmapFont;
-        //textButtonStyle.font = assets.manager.get("button/arial.bmp", BitmapFont.class);
 
         button = new TextButton(text, textButtonStyle);
         button.setHeight(100);

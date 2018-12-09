@@ -3,13 +3,15 @@ package com.kpetlak.arkanoid.controller;
 import com.badlogic.gdx.Gdx;
 import com.kpetlak.arkanoid.game.ArkanoidGame;
 import com.kpetlak.arkanoid.model.Ball;
+import com.kpetlak.arkanoid.model.Brick;
 import com.kpetlak.arkanoid.model.Platform;
 import com.kpetlak.arkanoid.screens.GamePlayScreen;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 public class BallController {
-    Logger logger = Logger.getLogger("Ball controller");
+    private Logger logger = Logger.getLogger("Ball controller");
     public void updatePosition(Ball ball) {
         ball.setX(ball.getX()+ball.getSpeed()*Gdx.graphics.getDeltaTime()*ball.getVector().x);
         ball.setY(ball.getY()+ball.getSpeed()*Gdx.graphics.getDeltaTime()*ball.getVector().y);
@@ -117,6 +119,60 @@ public class BallController {
                 //<=1/2
                 ball.getVector().x = -0.15f;
                 ball.getVector().y = 0.85f;
+            }
+        }
+    }
+
+    public void collisionWithBrick(Ball ball, List<Brick> brickList) {
+        for (Brick brick: brickList) {
+            if(ball.getX()+ball.getWidth() >= brick.getX() && ball.getX() <= brick.getX()+brick.getWidth()) {
+                if(ball.getY() <= brick.getY()+ brick.getHeight() && ball.getY()+ball.getHeight() >= brick.getY()){//sprawdzam czy kolizja y
+                    if(ball.getVector().y < 0 && ball.getVector().x >=0) {
+                        float szerokosc = (ball.getX()+ball.getWidth())-brick.getX();
+                        float wysokosc = (brick.getY()+brick.getHeight()) - ball.getY();
+                        if(szerokosc > wysokosc) {
+                            logger.info("gorna");
+                            ball.getVector().y *=-1;
+                        } else {
+                            logger.info("lewa");
+                            ball.getVector().x *=-1;
+                        }
+                        //lewy gorny
+                    } else if(ball.getVector().y >= 0 && ball.getVector().x >=0) {
+                        float szerokosc = (ball.getX()+ball.getWidth())-brick.getX();
+                        float wysokosc = (ball.getY()+ball.getHeight()) - brick.getY();
+                        if(szerokosc > wysokosc) {
+                            logger.info("dolna");
+                            ball.getVector().y *=-1;
+                        } else {
+                            logger.info("lewa");
+                            ball.getVector().x *=-1;
+                        }
+                        //lewy dolny
+                    } else if(ball.getVector().y >= 0 && ball.getVector().x <0) {
+                        float szerokosc = (brick.getX()+brick.getWidth())-ball.getX();
+                        float wysokosc = (ball.getY()+ball.getHeight()) - brick.getY();
+                        if(szerokosc > wysokosc) {
+                            logger.info("dolna");
+                            ball.getVector().y *=-1;
+                        } else {
+                            logger.info("prawa");
+                            ball.getVector().x *=-1;
+                        }
+                        //prawy dolny
+                    } else {
+                        float szerokosc = (brick.getX()+brick.getWidth())-ball.getX();
+                        float wysokosc = (brick.getY()+brick.getHeight()) - ball.getY();
+                        if(szerokosc > wysokosc) {
+                            logger.info("gorna");
+                            ball.getVector().y *=-1;
+                        } else {
+                            logger.info("prawa");
+                            ball.getVector().x *=-1;
+                        }
+                        //prawy gorny
+                    }
+                }
             }
         }
     }

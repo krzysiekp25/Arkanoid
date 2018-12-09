@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.utils.Disposable;
 
-public class GameplayScreenAssets implements Disposable, ScreenAssets {
+public class GamePlayScreenAssets implements Disposable, ScreenAssets {
 
     public void load() {
 

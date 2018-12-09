@@ -11,11 +11,8 @@ import com.kpetlak.arkanoid.controller.BallController;
 import com.kpetlak.arkanoid.controller.BrickController;
 import com.kpetlak.arkanoid.controller.PlatformController;
 import com.kpetlak.arkanoid.game.ArkanoidGame;
-import com.kpetlak.arkanoid.assets.GameplayScreenAssets;
-import com.kpetlak.arkanoid.model.Ball;
-import com.kpetlak.arkanoid.model.Brick;
-import com.kpetlak.arkanoid.model.GameButton;
-import com.kpetlak.arkanoid.model.Platform;
+import com.kpetlak.arkanoid.assets.GamePlayScreenAssets;
+import com.kpetlak.arkanoid.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +22,7 @@ public class GamePlayScreen extends AbstractScreen {
     private Platform platform;
     //todo lista czy cos innego?
     private List<List<Brick>> bricks;
+    private BrickList brickList;
     private BallController ballController;
     private PlatformController platformController;
     private GameButton gameEndButton;
@@ -36,7 +34,7 @@ public class GamePlayScreen extends AbstractScreen {
 
 
     public GamePlayScreen(ArkanoidGame game) {
-        super(game, new GameplayScreenAssets());
+        super(game, new GamePlayScreenAssets());
     }
 
     protected void init() {
@@ -51,7 +49,11 @@ public class GamePlayScreen extends AbstractScreen {
     }
 
     private void initBricks() {
-        bricks = new ArrayList<List<Brick>>();
+        brickList = new BrickList(assets);
+        for (Brick brick : brickList.getBrickList()) {
+            stage.addActor(brick);
+        }
+        /*bricks = new ArrayList<List<Brick>>();
         for (int i = 0; i< 5; i++) {
             bricks.add(new ArrayList<Brick>());
             for (int j = 0; j<4; j++) {
@@ -60,7 +62,7 @@ public class GamePlayScreen extends AbstractScreen {
                 bricks.get(i).get(j).setY(j*1.1f*assets.manager.get("bricks/brick.png", Texture.class).getHeight()+300);
                 stage.addActor(bricks.get(i).get(j));
             }
-        }
+        }*/
     }
 
     private void initPlatform() {
@@ -88,7 +90,6 @@ public class GamePlayScreen extends AbstractScreen {
     }
 
     public void win() {
-        //todo wyświetlić napis i przycisk na planszy poinformowac o wygranej
         gameEndButton = new GameButton("Wygrana!\nPrzejdz do menu glownego.", assets, 210, 190, endGameButtonFont);
         setEndGame();
         stage.addActor(gameEndButton.getButton());
@@ -102,7 +103,6 @@ public class GamePlayScreen extends AbstractScreen {
     }
 
     public void lose() {
-        //todo wyswietlic napis i przycisk o wygranej
         gameEndButton = new GameButton("Przegrana!\nPrzejdz do menu glownego.", assets, 210, 190, endGameButtonFont);
         setEndGame();
         stage.addActor(gameEndButton.getButton());
@@ -130,6 +130,7 @@ public class GamePlayScreen extends AbstractScreen {
                 platformController.updatePosition(platform);
                 ballController.checkCollisionAndUpdate(ball, platform, this);
                 platformController.checkCollisionAndUpdate(platform);
+                ballController.collisionWithBrick(ball, brickList.getBrickList());
             } else {
                 platformController.updatePositionBeforeStart(platform, ball);
                 platformController.checkCollisionBeforeStartAndUpdate(platform, ball);
