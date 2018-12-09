@@ -23,7 +23,6 @@ public class BallController {
     private void checkPlatformCollisionAndUpdate(Ball ball, Platform platform) {
         if(ball.getY() <= (platform.getY() + platform.getHeight()) && (ball.getX()+ball.getWidth()>= platform.getX() && (ball.getX() -ball.getWidth()) <= (platform.getX()+platform.getWidth()))) {
             correctBallVector(ball, platform);
-            //ball.setY(ball.getY() + (((platform.getY()+platform.getHeight()) - ball.getY())));
         }
     }
 
@@ -69,13 +68,16 @@ public class BallController {
         if(ball.getY()+ball.getHeight() >= ArkanoidGame.HEIGHT) {
             ball.getVector().y *=-1;
             ball.setY(ball.getY() - ((ball.getY() + ball.getHeight()) - ArkanoidGame.HEIGHT));
+            return;
         }
         if(ball.getY() <= 0){
             gamePlayScreen.lose();
+            return;
         }
         if(ball.getX()+ball.getWidth() >= ArkanoidGame.WIDTH) {
             ball.getVector().x *=-1;
             ball.setX(ball.getX() - ((ball.getX()+ ball.getWidth())-ArkanoidGame.WIDTH));
+            return;
         }
         if(ball.getX() <= 0) {
             ball.getVector().x *=-1;

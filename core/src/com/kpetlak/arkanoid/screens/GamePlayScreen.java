@@ -3,6 +3,7 @@ package com.kpetlak.arkanoid.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -22,6 +23,7 @@ import java.util.List;
 public class GamePlayScreen extends AbstractScreen {
     private Ball ball;
     private Platform platform;
+    //todo lista czy cos innego?
     private List<List<Brick>> bricks;
     private BallController ballController;
     private PlatformController platformController;
@@ -30,6 +32,7 @@ public class GamePlayScreen extends AbstractScreen {
     private BrickController brickController;
     private boolean gameStarted;
     private boolean endGame;
+    private BitmapFont endGameButtonFont;
 
 
     public GamePlayScreen(ArkanoidGame game) {
@@ -44,6 +47,7 @@ public class GamePlayScreen extends AbstractScreen {
         initPlatform();
         initBall();
         initBricks();
+        endGameButtonFont = assets.manager.get("fonts/bondi18.fnt", BitmapFont.class);
     }
 
     private void initBricks() {
@@ -85,7 +89,7 @@ public class GamePlayScreen extends AbstractScreen {
 
     public void win() {
         //todo wyświetlić napis i przycisk na planszy poinformowac o wygranej
-        gameEndButton = new GameButton("Wygrana!\nPrzejdz do menu glownego.", assets, 210, 190);
+        gameEndButton = new GameButton("Wygrana!\nPrzejdz do menu glownego.", assets, 210, 190, endGameButtonFont);
         setEndGame();
         stage.addActor(gameEndButton.getButton());
         gameEndButton.getButton().addListener(new ClickListener() {
@@ -99,7 +103,7 @@ public class GamePlayScreen extends AbstractScreen {
 
     public void lose() {
         //todo wyswietlic napis i przycisk o wygranej
-        gameEndButton = new GameButton("Przegrana!\nPrzejdz do menu glownego.", assets, 210, 190);
+        gameEndButton = new GameButton("Przegrana!\nPrzejdz do menu glownego.", assets, 210, 190, endGameButtonFont);
         setEndGame();
         stage.addActor(gameEndButton.getButton());
         gameEndButton.getButton().addListener(new ClickListener() {
