@@ -2,7 +2,6 @@ package com.kpetlak.arkanoid.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -14,7 +13,6 @@ import com.kpetlak.arkanoid.game.ArkanoidGame;
 import com.kpetlak.arkanoid.assets.GamePlayScreenAssets;
 import com.kpetlak.arkanoid.model.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class GamePlayScreen extends AbstractScreen {
@@ -130,7 +128,7 @@ public class GamePlayScreen extends AbstractScreen {
                 platformController.updatePosition(platform);
                 ballController.checkCollisionAndUpdate(ball, platform, this);
                 platformController.checkCollisionAndUpdate(platform);
-                ballController.collisionWithBrick(ball, brickList.getBrickList());
+                ballController.checkBrickCollisionAndUpdate(ball, brickList.getBrickList(), stage, this);
             } else {
                 platformController.updatePositionBeforeStart(platform, ball);
                 platformController.checkCollisionBeforeStartAndUpdate(platform, ball);

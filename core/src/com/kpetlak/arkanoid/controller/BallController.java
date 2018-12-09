@@ -1,6 +1,8 @@
 package com.kpetlak.arkanoid.controller;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.kpetlak.arkanoid.game.ArkanoidGame;
 import com.kpetlak.arkanoid.model.Ball;
 import com.kpetlak.arkanoid.model.Brick;
@@ -24,8 +26,24 @@ public class BallController {
 
     private void checkPlatformCollisionAndUpdate(Ball ball, Platform platform) {
         if(ball.getY() <= (platform.getY() + platform.getHeight()) && (ball.getX()+ball.getWidth()>= platform.getX() && (ball.getX() -ball.getWidth()) <= (platform.getX()+platform.getWidth()))) {
-            correctBallVector(ball, platform);
+            float overlappedWidth;
+            float overlappedHeight;
+            if(ball.getVector().x <0) {
+                overlappedWidth = (platform.getX()+platform.getWidth() - ball.getX());
+                overlappedHeight = (platform.getY()+platform.getHeight() - ball.getY());
+            } else {
+                overlappedWidth = (ball.getX()+ball.getWidth() - platform.getX());
+                overlappedHeight = (platform.getY()+platform.getHeight() - ball.getY());
+            }
+            if (overlappedWidth > overlappedHeight) {
+                correctBallVector(ball, platform);
+                correctBallPositionToPlatform(ball, platform);
+            }
         }
+    }
+
+    private void correctBallPositionToPlatform(Ball ball, Platform platform) {
+        ball.setY(platform.getY()+platform.getHeight());
     }
 
     private void correctBallVector(Ball ball, Platform platform) {
@@ -73,6 +91,7 @@ public class BallController {
             return;
         }
         if(ball.getY() <= 0){
+            Brick.setBrickLeft(0);
             gamePlayScreen.lose();
             return;
         }
@@ -123,9 +142,9 @@ public class BallController {
         }
     }
 
-    public void collisionWithBrick(Ball ball, List<Brick> brickList) {
+    public void checkBrickCollisionAndUpdate(Ball ball, List<Brick> brickList, Stage stage, GamePlayScreen gamePlayScreen) {
         for (Brick brick: brickList) {
-            if(ball.getX()+ball.getWidth() >= brick.getX() && ball.getX() <= brick.getX()+brick.getWidth()) {
+            if(!brick.isDeleted() && ball.getX()+ball.getWidth() >= brick.getX() && ball.getX() <= brick.getX()+brick.getWidth()) {
                 if(ball.getY() <= brick.getY()+ brick.getHeight() && ball.getY()+ball.getHeight() >= brick.getY()){//sprawdzam czy kolizja y
                     if(ball.getVector().y < 0 && ball.getVector().x >=0) {
                         float szerokosc = (ball.getX()+ball.getWidth())-brick.getX();
@@ -133,9 +152,11 @@ public class BallController {
                         if(szerokosc > wysokosc) {
                             logger.info("gorna");
                             ball.getVector().y *=-1;
+                            ball.setY(ball.getY() + ((brick.getY()+brick.getHeight())-ball.getY()));
                         } else {
                             logger.info("lewa");
                             ball.getVector().x *=-1;
+                            ball.setX(ball.getX() - ((ball.getX()+ball.getWidth()) - brick.getX()));
                         }
                         //lewy gorny
                     } else if(ball.getVector().y >= 0 && ball.getVector().x >=0) {
@@ -144,9 +165,11 @@ public class BallController {
                         if(szerokosc > wysokosc) {
                             logger.info("dolna");
                             ball.getVector().y *=-1;
+                            ball.setY(ball.getY() - ((ball.getY()+ball.getHeight()) - brick.getY()));
                         } else {
                             logger.info("lewa");
                             ball.getVector().x *=-1;
+                            ball.setX(ball.getX() - ((ball.getX()+ball.getWidth()) - brick.getX()));
                         }
                         //lewy dolny
                     } else if(ball.getVector().y >= 0 && ball.getVector().x <0) {
@@ -155,9 +178,11 @@ public class BallController {
                         if(szerokosc > wysokosc) {
                             logger.info("dolna");
                             ball.getVector().y *=-1;
+                            ball.setY(ball.getY() - ((ball.getY()+ball.getHeight()) - brick.getY()));
                         } else {
                             logger.info("prawa");
                             ball.getVector().x *=-1;
+                            ball.setX(ball.getX() + ((brick.getX()+brick.getWidth()) - ball.getX()));
                         }
                         //prawy dolny
                     } else {
@@ -166,11 +191,22 @@ public class BallController {
                         if(szerokosc > wysokosc) {
                             logger.info("gorna");
                             ball.getVector().y *=-1;
+                            ball.setY(ball.getY() + ((brick.getY()+brick.getHeight())-ball.getY()));
                         } else {
                             logger.info("prawa");
                             ball.getVector().x *=-1;
+                            ball.setX(ball.getX() + ((brick.getX()+brick.getWidth()) - ball.getX()));
                         }
                         //prawy gorny
+                    }
+                    for (Actor actor: stage.getActors()) {
+                        if(actor.getX() == brick.getX() && actor.getY() == brick.getY()) {
+                            actor.remove();
+                            brick.setDeleted(true);
+                            if(Brick.getBrickLeft() == 0) {
+                                gamePlayScreen.win();
+                            }
+                        }
                     }
                 }
             }

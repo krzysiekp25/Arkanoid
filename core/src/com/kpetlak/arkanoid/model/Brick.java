@@ -7,51 +7,31 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.kpetlak.arkanoid.assets.ScreenAssets;
 
 public class Brick extends Image {
-    /*Vector2 leftDownCollisionPoint;
-    Vector2 leftUpCollisionPoint;
-    Vector2 rightDownCollisionPoint;
-    Vector2 rightUpCollisionPoint;*/
+    private boolean deleted;
+    private static int brickLeft = 0;
 
     public Brick(ScreenAssets assets, float x, float y) {
         super(assets.manager.get("bricks/brick.png", Texture.class));
         setX(x);
         setY(y);
-        //Texture ballTexture = assets.manager.get("ball/ball.png", Texture.class);
-
-        /*leftDownCollisionPoint = new Vector2();
-        leftDownCollisionPoint.x = getX();
-        leftDownCollisionBox.y = getY();
-
-        leftUpCollisionBox = new Rectangle();
-        leftUpCollisionBox.x = getX();
-        leftUpCollisionBox.y = getY()+getHeight()-ballTexture.getHeight();
-
-        rightDownCollisionBox = new Rectangle();
-        rightDownCollisionBox.x = getX()+getWidth()-ballTexture.getWidth();
-        rightDownCollisionBox.y = getY();
-        rightDownCollisionBox.width = ballTexture.getWidth();
-        rightDownCollisionBox.height = ballTexture.getHeight();
-
-        rightUpCollisionBox = new Rectangle();
-        rightUpCollisionBox.x = getX()+getWidth()-ballTexture.getWidth();
-        rightUpCollisionBox.y = getY()+getHeight()-ballTexture.getHeight();
-        rightUpCollisionBox.width = ballTexture.getWidth();
-        rightUpCollisionBox.height = ballTexture.getHeight();*/
+        deleted = false;
+        brickLeft++;
     }
 
-    /*public Rectangle getLeftDownCollisionBox() {
-        return leftDownCollisionBox;
+    public boolean isDeleted() {
+        return deleted;
     }
 
-    public Rectangle getLeftUpCollisionBox() {
-        return leftUpCollisionBox;
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+        brickLeft--;
     }
 
-    public Rectangle getRightDownCollisionBox() {
-        return rightDownCollisionBox;
+    public static int getBrickLeft() {
+        return brickLeft;
     }
 
-    public Rectangle getRightUpCollisionBox() {
-        return rightUpCollisionBox;
-    }*/
+    public static void setBrickLeft(int brickLeft) {
+        Brick.brickLeft = brickLeft;
+    }
 }
