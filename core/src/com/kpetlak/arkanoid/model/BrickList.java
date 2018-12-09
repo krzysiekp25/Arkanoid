@@ -14,9 +14,10 @@ public class BrickList {
         brickList = new ArrayList<Brick>();
         for (int i = 0; i< 5; i++) {
             for (int j = 0; j<4; j++) {
-                float x = i*1.1f*brickTexture.getWidth()+150;//+200;
-                float y = j*1.1f*brickTexture.getHeight()+250;//+300;
+                float x = i*1.1f*brickTexture.getWidth()+150;
+                float y = j*1.1f*brickTexture.getHeight()+250;
                 brickList.add(new Brick(assets, x, y));
+                //todo rozmieszczenie cegiel
             }
         }
     }

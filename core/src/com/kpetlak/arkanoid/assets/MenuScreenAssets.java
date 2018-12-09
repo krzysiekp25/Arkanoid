@@ -12,7 +12,6 @@ public class MenuScreenAssets implements Disposable, ScreenAssets {
         manager.load("button/hover_button2.png", Texture.class);
         manager.load("button/pressed_button2.png", Texture.class);
         manager.load("fonts/bondi48.fnt", BitmapFont.class);
-        //manager.load("button/arial.bmp", BitmapFont.class);
     }
 
     @Override

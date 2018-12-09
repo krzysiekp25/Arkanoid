@@ -8,6 +8,7 @@ public class Platform extends Image {
     private int speed = 500;
 
     public Platform(ScreenAssets assets) {
+        //todo wyglad platformy
         super(assets.manager.get("platform/platform.png", Texture.class));
     }
 

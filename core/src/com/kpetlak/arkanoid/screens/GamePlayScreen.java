@@ -7,25 +7,19 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.kpetlak.arkanoid.controller.BallController;
-import com.kpetlak.arkanoid.controller.BrickController;
 import com.kpetlak.arkanoid.controller.PlatformController;
 import com.kpetlak.arkanoid.game.ArkanoidGame;
 import com.kpetlak.arkanoid.assets.GamePlayScreenAssets;
 import com.kpetlak.arkanoid.model.*;
 
-import java.util.List;
-
 public class GamePlayScreen extends AbstractScreen {
     private Ball ball;
     private Platform platform;
-    //todo lista czy cos innego?
-    private List<List<Brick>> bricks;
     private BrickList brickList;
     private BallController ballController;
     private PlatformController platformController;
     private GameButton gameEndButton;
-    //todo prawdopodobnie do usuniecia ze wzgledu na to ze to pilka kontroluje bloczek jesli chodzi o usuniecie i tak dalej
-    private BrickController brickController;
+
     private boolean gameStarted;
     private boolean endGame;
     private BitmapFont endGameButtonFont;
@@ -38,7 +32,6 @@ public class GamePlayScreen extends AbstractScreen {
     protected void init() {
         ballController = new BallController();
         platformController = new PlatformController();
-        brickController = new BrickController();
         gameStarted = false;
         initPlatform();
         initBall();
@@ -51,16 +44,6 @@ public class GamePlayScreen extends AbstractScreen {
         for (Brick brick : brickList.getBrickList()) {
             stage.addActor(brick);
         }
-        /*bricks = new ArrayList<List<Brick>>();
-        for (int i = 0; i< 5; i++) {
-            bricks.add(new ArrayList<Brick>());
-            for (int j = 0; j<4; j++) {
-                bricks.get(i).add(new Brick(assets));
-                bricks.get(i).get(j).setX(i*1.1f*assets.manager.get("bricks/brick.png", Texture.class).getWidth()+200);
-                bricks.get(i).get(j).setY(j*1.1f*assets.manager.get("bricks/brick.png", Texture.class).getHeight()+300);
-                stage.addActor(bricks.get(i).get(j));
-            }
-        }*/
     }
 
     private void initPlatform() {

@@ -14,6 +14,7 @@ public class TextLabel {
 
         textLabel.setX(x);
         textLabel.setY(y);
+        //todo napisac o tym w specyfikacji
         textLabel.setWidth(300);
         textLabel.setHeight(100);
         textLabel.setAlignment(Align.center);

@@ -21,8 +21,4 @@ public class Ball extends Image {
     public Vector2 getVector() {
         return vector;
     }
-
-    public void setVector(Vector2 vector) {
-        this.vector = vector;
-    }
 }
