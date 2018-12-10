@@ -146,10 +146,12 @@ public class BallController {
         for (Brick brick: brickList) {
             if(!brick.isDeleted() && ball.getX()+ball.getWidth() >= brick.getX() && ball.getX() <= brick.getX()+brick.getWidth()) {
                 if(ball.getY() <= brick.getY()+ brick.getHeight() && ball.getY()+ball.getHeight() >= brick.getY()){//sprawdzam czy kolizja y
+                    float overlappedWidth;
+                    float overlappedHeight;
                     if(ball.getVector().y < 0 && ball.getVector().x >=0) {
-                        float szerokosc = (ball.getX()+ball.getWidth())-brick.getX();
-                        float wysokosc = (brick.getY()+brick.getHeight()) - ball.getY();
-                        if(szerokosc > wysokosc) {
+                        overlappedWidth = (ball.getX()+ball.getWidth())-brick.getX();
+                        overlappedHeight = (brick.getY()+brick.getHeight()) - ball.getY();
+                        if(overlappedWidth > overlappedHeight) {
                             logger.info("gorna");
                             ball.getVector().y *=-1;
                             ball.setY(ball.getY() + ((brick.getY()+brick.getHeight())-ball.getY()));
@@ -160,9 +162,9 @@ public class BallController {
                         }
                         //lewy gorny
                     } else if(ball.getVector().y >= 0 && ball.getVector().x >=0) {
-                        float szerokosc = (ball.getX()+ball.getWidth())-brick.getX();
-                        float wysokosc = (ball.getY()+ball.getHeight()) - brick.getY();
-                        if(szerokosc > wysokosc) {
+                        overlappedWidth = (ball.getX()+ball.getWidth())-brick.getX();
+                        overlappedHeight = (ball.getY()+ball.getHeight()) - brick.getY();
+                        if(overlappedWidth > overlappedHeight) {
                             logger.info("dolna");
                             ball.getVector().y *=-1;
                             ball.setY(ball.getY() - ((ball.getY()+ball.getHeight()) - brick.getY()));
@@ -173,9 +175,9 @@ public class BallController {
                         }
                         //lewy dolny
                     } else if(ball.getVector().y >= 0 && ball.getVector().x <0) {
-                        float szerokosc = (brick.getX()+brick.getWidth())-ball.getX();
-                        float wysokosc = (ball.getY()+ball.getHeight()) - brick.getY();
-                        if(szerokosc > wysokosc) {
+                        overlappedWidth = (brick.getX()+brick.getWidth())-ball.getX();
+                        overlappedHeight = (ball.getY()+ball.getHeight()) - brick.getY();
+                        if(overlappedWidth > overlappedHeight) {
                             logger.info("dolna");
                             ball.getVector().y *=-1;
                             ball.setY(ball.getY() - ((ball.getY()+ball.getHeight()) - brick.getY()));
@@ -186,9 +188,9 @@ public class BallController {
                         }
                         //prawy dolny
                     } else {
-                        float szerokosc = (brick.getX()+brick.getWidth())-ball.getX();
-                        float wysokosc = (brick.getY()+brick.getHeight()) - ball.getY();
-                        if(szerokosc > wysokosc) {
+                        overlappedWidth = (brick.getX()+brick.getWidth())-ball.getX();
+                        overlappedHeight = (brick.getY()+brick.getHeight()) - ball.getY();
+                        if(overlappedWidth > overlappedHeight) {
                             logger.info("gorna");
                             ball.getVector().y *=-1;
                             ball.setY(ball.getY() + ((brick.getY()+brick.getHeight())-ball.getY()));
@@ -206,6 +208,7 @@ public class BallController {
                             if(Brick.getBrickLeft() == 0) {
                                 gamePlayScreen.win();
                             }
+                            return;
                         }
                     }
                 }

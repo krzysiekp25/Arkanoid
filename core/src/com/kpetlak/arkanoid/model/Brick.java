@@ -10,7 +10,7 @@ public class Brick extends Image {
 
     public Brick(ScreenAssets assets, float x, float y) {
         //todo wyglad cegiel
-        super(assets.manager.get("bricks/brick.png", Texture.class));
+        super(assets.manager.get("bricks/brick2.png", Texture.class));
         setX(x);
         setY(y);
         deleted = false;

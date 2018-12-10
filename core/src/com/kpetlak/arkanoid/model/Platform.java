@@ -9,7 +9,7 @@ public class Platform extends Image {
 
     public Platform(ScreenAssets assets) {
         //todo wyglad platformy
-        super(assets.manager.get("platform/platform.png", Texture.class));
+        super(assets.manager.get("platform/platform2.png", Texture.class));
     }
 
     public int getSpeed() {
