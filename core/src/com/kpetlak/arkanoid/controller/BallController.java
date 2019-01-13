@@ -17,12 +17,12 @@ public class BallController {
         ball.setY(ball.getY()+ball.getSpeed()*Gdx.graphics.getDeltaTime()*ball.getVector().y);
     }
 
-    public void checkCollisionAndUpdate(Ball ball, Platform platform, GamePlayScreen gamePlayScreen) {
+    public void checkCollisionAndUpdate(AbstractBall ball, AbstractPlatform platform, GamePlayScreen gamePlayScreen) {
         checkWallCollisionAndUpdate(ball, gamePlayScreen);
         checkPlatformCollisionAndUpdate(ball, platform);
     }
 
-    private void checkPlatformCollisionAndUpdate(Ball ball, Platform platform) {
+    private void checkPlatformCollisionAndUpdate(AbstractBall ball, AbstractPlatform platform) {
         if(ball.getY() <= (platform.getY() + platform.getHeight()) && (ball.getX()+ball.getWidth()>= platform.getX() && (ball.getX() -ball.getWidth()) <= (platform.getX()+platform.getWidth()))) {
             float overlappedWidth;
             float overlappedHeight;
@@ -40,11 +40,11 @@ public class BallController {
         }
     }
 
-    private void correctBallPositionToPlatform(Ball ball, Platform platform) {
+    private void correctBallPositionToPlatform(AbstractBall ball, AbstractPlatform platform) {
         ball.setY(platform.getY()+platform.getHeight());
     }
 
-    private void correctBallVector(Ball ball, Platform platform) {
+    private void correctBallVector(AbstractBall ball, AbstractPlatform platform) {
         ball.getVector().y *=-1;
         float correction;
         if(ball.getX()>(platform.getWidth()/2+platform.getX())) {
@@ -77,12 +77,12 @@ public class BallController {
         if(Math.abs(correction+ball.getVector().x) <=0.99) {
             ball.getVector().x = ball.getVector().x + correction;
             ball.getVector().y = 1 - Math.abs(ball.getVector().x);
-            logger.info("x: "+ball.getVector().x);
-            logger.info("y: "+ball.getVector().y);
+            //logger.info("x: "+ball.getVector().x);
+            //logger.info("y: "+ball.getVector().y);
         }
     }
 
-    private void checkWallCollisionAndUpdate(Ball ball, GamePlayScreen gamePlayScreen) {
+    private void checkWallCollisionAndUpdate(AbstractBall ball, GamePlayScreen gamePlayScreen) {
         if(ball.getY()+ball.getHeight() >= ArkanoidGame.HEIGHT) {
             ball.getVector().y *=-1;
             ball.setY(ball.getY() - ((ball.getY() + ball.getHeight()) - ArkanoidGame.HEIGHT));
