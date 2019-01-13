@@ -4,9 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.kpetlak.arkanoid.game.ArkanoidGame;
-import com.kpetlak.arkanoid.model.Ball;
-import com.kpetlak.arkanoid.model.Brick;
-import com.kpetlak.arkanoid.model.Platform;
+import com.kpetlak.arkanoid.model.*;
 import com.kpetlak.arkanoid.screens.GamePlayScreen;
 
 import java.util.List;
@@ -106,7 +104,7 @@ public class BallController {
         }
     }
 
-    public void setStartingVector(Ball ball, Platform platform) {
+    public void setStartingVector(AbstractBall ball, AbstractPlatform platform) {
         if(ball.getX()>(platform.getWidth()/2+platform.getX())) {
             if (ball.getX() > (platform.getWidth()*3/5)+platform.getX()) {
                 if (ball.getX() > (platform.getWidth()*4/5)+platform.getX()) {

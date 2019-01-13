@@ -3,6 +3,8 @@ package com.kpetlak.arkanoid.controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.kpetlak.arkanoid.game.ArkanoidGame;
+import com.kpetlak.arkanoid.model.AbstractBall;
+import com.kpetlak.arkanoid.model.AbstractPlatform;
 import com.kpetlak.arkanoid.model.Ball;
 import com.kpetlak.arkanoid.model.Platform;
 
@@ -27,7 +29,7 @@ public class PlatformController {
         }
     }
 
-    public void checkCollisionAndUpdate(Platform platform) {
+    public void checkCollisionAndUpdate(AbstractPlatform platform) {
 
         if(platform.getX() <= 0) {
             platform.setX(platform.getX() + (0-platform.getX()));
@@ -37,7 +39,7 @@ public class PlatformController {
         }
     }
 
-    public void checkCollisionBeforeStartAndUpdate(Platform platform, Ball ball) {
+    public void checkCollisionBeforeStartAndUpdate(AbstractPlatform platform, AbstractBall ball) {
         if(platform.getX() <= 0) {
             float offset = (0-platform.getX());
             platform.setX(platform.getX() + offset);

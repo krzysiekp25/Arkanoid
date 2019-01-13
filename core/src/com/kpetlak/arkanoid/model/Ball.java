@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.kpetlak.arkanoid.assets.ScreenAssets;
 
-public class Ball extends Image {
+public class Ball extends AbstractBall {
     private int speed = 500;
     private Vector2 vector;
 
