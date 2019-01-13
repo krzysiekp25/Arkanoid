@@ -151,7 +151,7 @@ public class BallController {
                     if(ball.getVector().y < 0 && ball.getVector().x >=0) {
                         overlappedWidth = (ball.getX()+ball.getWidth())-brick.getX();
                         overlappedHeight = (brick.getY()+brick.getHeight()) - ball.getY();
-                        if(overlappedWidth > overlappedHeight) {
+                        if(overlappedWidth >= overlappedHeight) {
                             logger.info("gorna");
                             ball.getVector().y *=-1;
                             ball.setY(ball.getY() + ((brick.getY()+brick.getHeight())-ball.getY()));
@@ -164,7 +164,7 @@ public class BallController {
                     } else if(ball.getVector().y >= 0 && ball.getVector().x >=0) {
                         overlappedWidth = (ball.getX()+ball.getWidth())-brick.getX();
                         overlappedHeight = (ball.getY()+ball.getHeight()) - brick.getY();
-                        if(overlappedWidth > overlappedHeight) {
+                        if(overlappedWidth >= overlappedHeight) {
                             logger.info("dolna");
                             ball.getVector().y *=-1;
                             ball.setY(ball.getY() - ((ball.getY()+ball.getHeight()) - brick.getY()));
@@ -177,7 +177,7 @@ public class BallController {
                     } else if(ball.getVector().y >= 0 && ball.getVector().x <0) {
                         overlappedWidth = (brick.getX()+brick.getWidth())-ball.getX();
                         overlappedHeight = (ball.getY()+ball.getHeight()) - brick.getY();
-                        if(overlappedWidth > overlappedHeight) {
+                        if(overlappedWidth >= overlappedHeight) {
                             logger.info("dolna");
                             ball.getVector().y *=-1;
                             ball.setY(ball.getY() - ((ball.getY()+ball.getHeight()) - brick.getY()));
@@ -190,7 +190,7 @@ public class BallController {
                     } else {
                         overlappedWidth = (brick.getX()+brick.getWidth())-ball.getX();
                         overlappedHeight = (brick.getY()+brick.getHeight()) - ball.getY();
-                        if(overlappedWidth > overlappedHeight) {
+                        if(overlappedWidth >= overlappedHeight) {
                             logger.info("gorna");
                             ball.getVector().y *=-1;
                             ball.setY(ball.getY() + ((brick.getY()+brick.getHeight())-ball.getY()));
